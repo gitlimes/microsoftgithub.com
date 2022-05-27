@@ -37,7 +37,7 @@ export default function Home({ rickrolled }) {
           content="This isn't GitHub, and isn't affiliated with Microsoft in any way. It's just a website that lets you create legit-looking GitHub links that
           rickroll the visitor."
         />
-        <meta name="twitter:image" content="/twimg.png" />
+        <meta name="twitter:image" content="https://www.microsoftgithub.com/twimg.png" />
       </Head>
 
       <div className={styles.content}>
