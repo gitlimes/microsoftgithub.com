@@ -27,12 +27,17 @@ export default function Home({ rickrolled }) {
         <title>NotHub</title>
         <meta
           name="description"
-          content="This isn't GitHub, and isn't affiliated with Microsoft in any way."
+          content="This isn't GitHub, and isn't affiliated with Microsoft in any way. It's just a website that lets you create legit-looking GitHub links that
+          rickroll the visitor."
         />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@github" />
-        <meta name="twitter:title" content="Home" />
-        <meta name="twitter:description" content="Home page" />
+        <meta name="twitter:title" content="NotHub" />
+        <meta
+          name="twitter:description"
+          content="This isn't GitHub, and isn't affiliated with Microsoft in any way. It's just a website that lets you create legit-looking GitHub links that
+          rickroll the visitor."
+        />
+        <meta name="twitter:image" content="/twimg.png" />
       </Head>
 
       <div className={styles.content}>
