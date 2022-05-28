@@ -72,7 +72,7 @@ export default function Home({ rickrolled }) {
             it would've been a shame not to use it to rickroll people.
             <br />
             <i>How many people, you ask?</i>{" "}
-            <code className="bg">{rickrolled}</code> and counting!
+            <code className="bg">{rickrolled}</code> and counting! (this does include non-human visitors)
           </p>
         </div>
       </div>

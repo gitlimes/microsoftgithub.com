@@ -41,6 +41,8 @@ export async function getServerSideProps({ req, res, query }) {
     image: githubData.match(regexes.image)?.[0] || "",
   };
 
+  pageData.meta = Boolean(pageData.description + pageData.image); // if there's a description or image, we'll render the meta tags
+
   return {
     props: {
       pageData,
@@ -64,43 +66,47 @@ export default function Home({ pageData, githubPath, rickrolled }) {
     <div>
       <Head>
         <title>{pageData.title}</title>
-        <meta name="description" content={pageData.description} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@github" />
-        <meta name="twitter:title" content={pageData.title} />
-        <meta name="twitter:description" content={pageData.description} />
-        <meta name="twitter:image" content={pageData.image} />
-        <meta property="og:title" content={pageData.title} />
-        <meta property="og:description" content={pageData.description} />
-        <meta property="og:image" content={pageData.image} />
-        <meta property="og:image:alt" content={pageData.description} />
-        <meta
-          property="og:url"
-          content={`https://www.microsoftgithub.com/${githubPath}`}
-        />
-        <meta property="og:site_name" content="GitHub" />
-        <meta property="og:type" content="object" />
 
-        <link
-          rel="mask-icon"
-          href="https://github.githubassets.com/pinned-octocat.svg"
-          color="#000000"
-        />
-        <link
-          rel="alternate icon"
-          className="js-site-favicon"
-          type="image/png"
-          href="https://github.githubassets.com/favicons/favicon.png"
-        />
-        <link
-          rel="icon"
-          className="js-site-favicon"
-          type="image/svg+xml"
-          href="https://github.githubassets.com/favicons/favicon.svg"
-        />
+        {pageData.meta && (
+          <>
+            <meta name="description" content={pageData.description} />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:site" content="@github" />
+            <meta name="twitter:title" content={pageData.title} />
+            <meta name="twitter:description" content={pageData.description} />
+            <meta name="twitter:image" content={pageData.image} />
+            <meta property="og:title" content={pageData.title} />
+            <meta property="og:description" content={pageData.description} />
+            <meta property="og:image" content={pageData.image} />
+            <meta property="og:image:alt" content={pageData.description} />
+            <meta
+              property="og:url"
+              content={`https://www.microsoftgithub.com/${githubPath}`}
+            />
+            <meta property="og:site_name" content="GitHub" />
+            <meta property="og:type" content="object" />
 
-        <meta name="theme-color" content="#1e2327" />
-        <meta name="color-scheme" content="dark light" />
+            <link
+              rel="mask-icon"
+              href="https://github.githubassets.com/pinned-octocat.svg"
+              color="#000000"
+            />
+            <link
+              rel="alternate icon"
+              className="js-site-favicon"
+              type="image/png"
+              href="https://github.githubassets.com/favicons/favicon.png"
+            />
+            <link
+              rel="icon"
+              className="js-site-favicon"
+              type="image/svg+xml"
+              href="https://github.githubassets.com/favicons/favicon.svg"
+            />
+
+            <meta name="theme-color" content="#1e2327" />
+          </>
+        )}
       </Head>
       <p>
         Redirecting to the repository... if this doesn't work, click{" "}
