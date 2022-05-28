@@ -4,18 +4,29 @@ import { SupabaseAdmin } from "../lib/supabase-admin";
 
 import styles from "../styles/Home.module.css";
 
-export async function getServerSideProps({ res, query }) {
+export async function getServerSideProps() {
   const {
     data: {
-      [0]: { view_count },
+      [0]: { view_count: rickrolledUsers },
     },
   } = await SupabaseAdmin.from("pages")
     .select("view_count")
-    .filter("slug", "eq", "redirect");
+    .filter("slug", "eq", "rickrolled-user");
+
+  const {
+    data: {
+      [0]: { view_count: rickrolledCrawlers },
+    },
+  } = await SupabaseAdmin.from("pages")
+    .select("view_count")
+    .filter("slug", "eq", "rickrolled-crawler");
 
   return {
     props: {
-      rickrolled: view_count,
+      rickrolled: {
+        users: rickrolledUsers,
+        crawlers: rickrolledCrawlers,
+      },
     },
   };
 }
@@ -37,7 +48,10 @@ export default function Home({ rickrolled }) {
           content="This isn't GitHub, and isn't affiliated with Microsoft in any way. It's just a website that lets you create legit-looking GitHub links that
           rickroll the visitor."
         />
-        <meta name="twitter:image" content="https://www.microsoftgithub.com/twimg.png" />
+        <meta
+          name="twitter:image"
+          content="https://www.microsoftgithub.com/twimg.png"
+        />
       </Head>
 
       <div className={styles.content}>
@@ -72,7 +86,10 @@ export default function Home({ rickrolled }) {
             it would've been a shame not to use it to rickroll people.
             <br />
             <i>How many people, you ask?</i>{" "}
-            <code className="bg">{rickrolled}</code> and counting! (this does include non-human visitors)
+            <code className="bg">{rickrolled.users}</code> and counting! If you
+            wanna add the crawlers, that's{" "}
+            <code className="bg">{rickrolled.users + rickrolled.crawlers}</code>
+            !
           </p>
         </div>
       </div>

@@ -1,9 +1,19 @@
 import Head from "next/head";
 import { SupabaseAdmin } from "../lib/supabase-admin";
+import { detectRobot } from "../lib/detectRobot";
 
 export async function getServerSideProps({ req, res, query }) {
-  // increment the redirect count
-  await SupabaseAdmin.rpc("increment_page_view", { page_slug: "redirect" });
+  if (detectRobot(req.headers["user-agent"])) {
+    // increment the redirect count for crawlers
+    await SupabaseAdmin.rpc("increment_page_view", {
+      page_slug: "rickrolled-crawler",
+    });
+  } else {
+    // increment the redirect count for users
+    await SupabaseAdmin.rpc("increment_page_view", {
+      page_slug: "rickrolled-user",
+    });
+  }
 
   const githubPath = query.params.join("/");
 
