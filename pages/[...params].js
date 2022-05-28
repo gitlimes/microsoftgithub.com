@@ -1,22 +1,22 @@
 import Head from "next/head";
 import Router, { useRouter } from "next/router";
-import { SupabaseAdmin } from '../lib/supabase-admin';
+import { SupabaseAdmin } from "../lib/supabase-admin";
 
 export async function getServerSideProps({ res, query }) {
   // increment the redirect count
-  await SupabaseAdmin.rpc('increment_page_view', { page_slug: "redirect" });
+  await SupabaseAdmin.rpc("increment_page_view", { page_slug: "redirect" });
 
   const githubPath = query.params.join("/");
 
   // all the needed regexes
   const regexes = {
-    title: new RegExp("(?<=<title>).*(?=</title>)", "g"),
+    title: new RegExp("(?<=<title>).+?(?=</title>)", "g"),
     description: new RegExp(
-      '(?<=<meta name="description" content=").*(?=">)',
+      '(?<=<meta (name)?(property)?="description" content=").+?(?=" */*>)',
       "g"
     ),
     image: new RegExp(
-      '(?<=<meta name="twitter:image:src" content=").*(?=" /><meta name="twitter:site" )',
+      '(?<=<meta (name)?(property)?="twitter:image:src" content=").+?(?=" */*>)',
       "g"
     ),
   };
