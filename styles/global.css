@@ -1,10 +1,6 @@
 :root {
-  --width: 80rem;
-
   --secondary: #fff;
   --background: #011627;
-  --primary-font: "Poppins", sans-serif;
-  --secondary-font: "museo-sans-rounded", sans-serif;
 }
 
 html,
@@ -72,7 +68,7 @@ code {
 }
 code.bg {
   line-break: auto;
-  background: #31335E;
+  background: #31335e;
   padding: 0.1rem;
   border-radius: 0.2rem;
 }
