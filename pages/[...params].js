@@ -1,12 +1,18 @@
 import Head from "next/head";
-import Router, { useRouter } from "next/router";
 import { SupabaseAdmin } from "../lib/supabase-admin";
 
-export async function getServerSideProps({ res, query }) {
+export async function getServerSideProps({ req, res, query }) {
   // increment the redirect count
   await SupabaseAdmin.rpc("increment_page_view", { page_slug: "redirect" });
 
   const githubPath = query.params.join("/");
+
+  // we check if the user has been rickrolled on this page before
+  const rickrolled = Boolean(req.cookies?.[githubPath]);
+  // if not, we set a cookie
+  if (!rickrolled) {
+    res.setHeader("Set-Cookie", `${githubPath}=1; path=/;`);
+  }
 
   // all the needed regexes
   const regexes = {
@@ -39,17 +45,19 @@ export async function getServerSideProps({ res, query }) {
     props: {
       pageData,
       githubPath,
+      rickrolled,
     },
   };
 }
 
-export default function Home({ pageData, githubPath }) {
+export default function Home({ pageData, githubPath, rickrolled }) {
   if (typeof window !== "undefined") {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const router = useRouter();
-
-    router.push(`https://www.youtube.com/watch?v=dQw4w9WgXcQ`);
-
+    // if the user has already been rickrolled by the page, we redirect to the actual repo
+    location.assign(
+      rickrolled
+        ? `https://www.github.com/${githubPath}`
+        : "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    );
   }
 
   return (
@@ -94,10 +102,18 @@ export default function Home({ pageData, githubPath }) {
         <meta name="theme-color" content="#1e2327" />
         <meta name="color-scheme" content="dark light" />
       </Head>
-      <p
-      >
+      <p>
         Redirecting to the repository... if this doesn't work, click{" "}
-        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">here</a>.
+        <a
+          href={
+            rickrolled
+              ? `https://www.github.com/${githubPath}`
+              : "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+          }
+        >
+          here
+        </a>
+        .
       </p>
     </div>
   );
