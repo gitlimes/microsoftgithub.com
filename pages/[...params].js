@@ -21,7 +21,7 @@ export async function getServerSideProps({ req, res, query }) {
   const rickrolled = Boolean(req.cookies?.[githubPath]);
   // if not, we set a cookie
   if (!rickrolled) {
-    res.setHeader("Set-Cookie", `${githubPath}=1; path=/;`);
+    res.setHeader("Set-Cookie", `${githubPath}=1; path=/; Max-Age=300`);
   }
 
   // all the needed regexes
