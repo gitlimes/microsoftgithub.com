@@ -1,32 +1,17 @@
 import Head from "next/head";
-
-import { SupabaseAdmin } from "../lib/supabase-admin";
-
 import styles from "../styles/Home.module.css";
 
 export async function getServerSideProps() {
-  const {
-    data: {
-      [0]: { view_count: rickrolledUsers },
-    },
-  } = await SupabaseAdmin.from("pages")
-    .select("view_count")
-    .filter("slug", "eq", "rickrolled-user");
-
-  const {
-    data: {
-      [0]: { view_count: rickrolledCrawlers },
-    },
-  } = await SupabaseAdmin.from("pages")
-    .select("view_count")
-    .filter("slug", "eq", "rickrolled-crawler");
+  async function getStats() {
+    const statsFetch = await fetch("https://microsoftgithub.com/api/stats");
+    const statsJson = await statsFetch.json();
+    return statsJson;
+  }
+  const { rickrolled } = await getStats();
 
   return {
     props: {
-      rickrolled: {
-        users: rickrolledUsers,
-        crawlers: rickrolledCrawlers,
-      },
+      rickrolled,
     },
   };
 }
@@ -86,10 +71,7 @@ export default function Home({ rickrolled }) {
             it would've been a shame not to use it to rickroll people.
             <br />
             <i>How many people, you ask?</i>{" "}
-            <code className="bg">{rickrolled.users}</code> and counting! If you
-            wanna add the crawlers, that's{" "}
-            <code className="bg">{rickrolled.users + rickrolled.crawlers}</code>
-            !
+            <code className="bg">{rickrolled.users}</code> and counting!
           </p>
         </div>
       </div>
