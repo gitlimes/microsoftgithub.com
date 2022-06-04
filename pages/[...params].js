@@ -3,6 +3,8 @@ import { SupabaseAdmin } from "../lib/supabase-admin";
 import { detectRobot } from "../lib/detectRobot";
 
 export async function getServerSideProps({ req, res, query }) {
+  const isGist = req.headers.host.includes("gist");
+
   if (detectRobot(req.headers["user-agent"])) {
     // increment the redirect count for crawlers
     await SupabaseAdmin.rpc("increment_page_view", {
@@ -17,11 +19,15 @@ export async function getServerSideProps({ req, res, query }) {
 
   const githubPath = query.params.join("/");
 
+  const actualUrl = `https://${
+    isGist ? "gist.github.com" : "github.com"
+  }/${githubPath}`;
+
   // we check if the user has been rickrolled on this page before
-  const rickrolled = Boolean(req.cookies?.[githubPath]);
+  const rickrolled = Boolean(req.cookies?.[actualUrl]);
   // if not, we set a cookie
   if (!rickrolled) {
-    res.setHeader("Set-Cookie", `${githubPath}=1; path=/; Max-Age=300`);
+    res.setHeader("Set-Cookie", `${actualUrl}=1; path=/; Max-Age=300`);
   }
 
   // all the needed regexes
@@ -38,7 +44,7 @@ export async function getServerSideProps({ req, res, query }) {
   };
 
   // fetch the actual page
-  const githubResponse = await fetch(`https://github.com/${githubPath}`, {
+  const githubResponse = await fetch(actualUrl, {
     method: "GET",
   });
 
@@ -57,18 +63,17 @@ export async function getServerSideProps({ req, res, query }) {
     props: {
       pageData,
       githubPath,
+      actualUrl,
       rickrolled,
     },
   };
 }
 
-export default function Home({ pageData, githubPath, rickrolled }) {
+export default function Home({ pageData, githubPath, actualUrl, rickrolled }) {
   if (typeof window !== "undefined") {
     // if the user has already been rickrolled by the page, we redirect to the actual repo
     location.assign(
-      rickrolled
-        ? `https://www.github.com/${githubPath}`
-        : "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+      rickrolled ? actualUrl : "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
     );
   }
 
@@ -91,7 +96,7 @@ export default function Home({ pageData, githubPath, rickrolled }) {
             <meta property="og:image:alt" content={pageData.description} />
             <meta
               property="og:url"
-              content={`https://www.microsoftgithub.com/${githubPath}`}
+              content={`https://microsoftgithub.com/${githubPath}`}
             />
             <meta property="og:site_name" content="GitHub" />
             <meta property="og:type" content="object" />
@@ -123,7 +128,7 @@ export default function Home({ pageData, githubPath, rickrolled }) {
         <a
           href={
             rickrolled
-              ? `https://www.github.com/${githubPath}`
+              ? actualUrl
               : "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
           }
         >
