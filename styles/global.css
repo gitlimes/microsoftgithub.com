@@ -73,6 +73,10 @@ code.bg {
   border-radius: 0.2rem;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 ::selection {
   background: var(--secondary);
   color: var(--background);

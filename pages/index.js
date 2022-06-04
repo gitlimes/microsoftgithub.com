@@ -1,6 +1,8 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 
+import { useState } from "react";
+
 export async function getServerSideProps() {
   async function getStats() {
     const statsFetch = await fetch("https://microsoftgithub.com/api/stats");
@@ -17,6 +19,7 @@ export async function getServerSideProps() {
 }
 
 export default function Home({ rickrolled }) {
+  const [extendedStats, setExtendedStats] = useState(false);
   return (
     <div className={styles.wrapper}>
       <Head>
@@ -71,7 +74,13 @@ export default function Home({ rickrolled }) {
             it would've been a shame not to use it to rickroll people.
             <br />
             <i>How many people, you ask?</i>{" "}
-            <code className="bg">{rickrolled.users}</code> and counting!
+            <code
+              className="bg clickable"
+              onClick={() => setExtendedStats(!extendedStats)}
+            >
+              {extendedStats ? rickrolled.users : `${rickrolled.kusers}k`}
+            </code>{" "}
+            and counting!
           </p>
         </div>
       </div>
