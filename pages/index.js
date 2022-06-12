@@ -102,7 +102,7 @@ export default function Home({ rickrolled }) {
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
           </svg>{" "}
           by{" "}
-          <a href="https://www.ashmonty.com" target="_blank" rel="noreferrer">
+          <a href="https://ashm.dev" target="_blank" rel="noreferrer">
             ash
           </a>{" "}
           • This website is in no way affiliated with Microsoft or any of its
