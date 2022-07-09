@@ -17,7 +17,7 @@ export async function getServerSideProps({ req, res, query }) {
     });
   }
 
-  const githubPath = query.params.join("/");
+  const githubPath = query.params?.join("/") || "";
 
   const actualUrl = `https://${
     isGist ? "gist.github.com" : "github.com"
