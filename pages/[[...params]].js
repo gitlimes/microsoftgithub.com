@@ -33,12 +33,17 @@ export async function getServerSideProps({ req, res, query }) {
   // all the needed regexes
   const regexes = {
     title: new RegExp("(?<=<title>).+?(?=</title>)", "g"),
+    twitterTitle: new RegExp("(?<=<meta name=\"twitter:title\" content=\").+?(?=\")", "g"),
     description: new RegExp(
       '(?<=<meta (name)?(property)?="description" content=").+?(?=" */*>)',
       "g"
     ),
     image: new RegExp(
       '(?<=<meta (name)?(property)?="twitter:image:src" content=").+?(?=" */*>)',
+      "g"
+    ),
+    twitterCard: new RegExp(
+      '(?<=<meta (name)?(property)?="twitter:card" content=").+?(?=" */*>)',
       "g"
     ),
   };
@@ -52,9 +57,10 @@ export async function getServerSideProps({ req, res, query }) {
 
   // extrapolate the title, description, and image
   const pageData = {
-    title: githubData.match(regexes.title)?.[0] || "",
+    title: githubData.match(regexes.twitterTitle)?.[0] || githubData.match(regexes.title)?.[0] || "",
     description: githubData.match(regexes.description)?.[0] || "",
     image: githubData.match(regexes.image)?.[0] || "",
+    twitterCard: githubData.match(regexes.twitterCard)?.[0] || "summary_large_image",
   };
 
   pageData.meta = Boolean(pageData.description + pageData.image); // if there's a description or image, we'll render the meta tags
@@ -85,7 +91,7 @@ export default function Home({ pageData, githubPath, actualUrl, rickrolled }) {
         {pageData.meta && (
           <>
             <meta name="description" content={pageData.description} />
-            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:card" content={pageData.twitterCard} />
             <meta name="twitter:site" content="@github" />
             <meta name="twitter:title" content={pageData.title} />
             <meta name="twitter:description" content={pageData.description} />
