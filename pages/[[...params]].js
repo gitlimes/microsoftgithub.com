@@ -78,9 +78,9 @@ export async function getServerSideProps({ req, res, query }) {
 export default function Home({ pageData, githubPath, actualUrl, rickrolled }) {
   if (typeof window !== "undefined") {
     // if the user has already been rickrolled by the page, we redirect to the actual repo
-    location.assign(
+    /*location.assign(
       rickrolled ? actualUrl : "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-    );
+    );*/
   }
 
   return (
@@ -129,9 +129,9 @@ export default function Home({ pageData, githubPath, actualUrl, rickrolled }) {
           </>
         )}
       </Head>
-      <p>
-        Redirecting to the repository... if this doesn't work, click{" "}
-        <a
+      <p style={{margin: "1em", fontSize: "18px"}}>
+        Redirecting to the repository... if you aren't being redirected automatically, click{" "}
+        <a style={{fontWeight: 500, textDecoration: "underline"}}
           href={
             rickrolled
               ? actualUrl
@@ -142,6 +142,7 @@ export default function Home({ pageData, githubPath, actualUrl, rickrolled }) {
         </a>
         .
       </p>
+      <a rel="me" style={{display: "none"}} href="https://mas.to/@ashgray">Mastodon</a>
     </div>
   );
 }

@@ -55,13 +55,13 @@ export default function Home({ rickrolled }) {
           <h1>Usage</h1>
           <p>
             Just replace <code className="bg">github.com</code> with{" "}
-            <code className="bg">microsoftgithub.com</code>. Yeah, that's all!
-            The resulting url will redirect to the rickroll link. For example,{" "}
+            <code className="bg">microsoftgithub.com</code>. Yup, that's all!
+            The resulting url will redirect to the rickroll video. For example,{" "}
             <code>github.com/ashmonty/website</code> becomes{" "}
             <code>microsoftgithub.com/ashmonty/website</code>.
             <br />
-            When embedded on Twitter, Discord and other social sites, the link
-            will display the official social preview, for extra realism.
+            The link's social media preview will look exactly like the official
+            one.
           </p>
         </div>
 
@@ -80,7 +80,11 @@ export default function Home({ rickrolled }) {
             >
               {extendedStats ? rickrolled.users : `${rickrolled.kusers}k`}
             </code>{" "}
-            and counting!
+            and counting (that's{" "}
+            <span style={{ textDecoration: "underline", fontStyle: "italic" }}>
+              excluding
+            </span>{" "}
+            bots and crawlers, btw)!
           </p>
         </div>
       </div>
@@ -98,6 +102,7 @@ export default function Home({ rickrolled }) {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
+            style={{transform: "translateY(0.1em)"}}
           >
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
           </svg>{" "}
@@ -115,6 +120,9 @@ export default function Home({ rickrolled }) {
             Source code
           </a>
         </p>
+        <a rel="me" style={{ display: "none" }} href="https://mas.to/@ashgray">
+          Mastodon
+        </a>
       </footer>
     </div>
   );
