@@ -33,7 +33,10 @@ export async function getServerSideProps({ req, res, query }) {
   // all the needed regexes
   const regexes = {
     title: new RegExp("(?<=<title>).+?(?=</title>)", "g"),
-    twitterTitle: new RegExp("(?<=<meta name=\"twitter:title\" content=\").+?(?=\")", "g"),
+    twitterTitle: new RegExp(
+      '(?<=<meta name="twitter:title" content=").+?(?=")',
+      "g"
+    ),
     description: new RegExp(
       '(?<=<meta (name)?(property)?="description" content=").+?(?=" */*>)',
       "g"
@@ -57,30 +60,35 @@ export async function getServerSideProps({ req, res, query }) {
 
   // extrapolate the title, description, and image
   const pageData = {
-    title: githubData.match(regexes.twitterTitle)?.[0] || githubData.match(regexes.title)?.[0] || "",
+    title:
+      githubData.match(regexes.twitterTitle)?.[0] ||
+      githubData.match(regexes.title)?.[0] ||
+      "",
     description: githubData.match(regexes.description)?.[0] || "",
     image: githubData.match(regexes.image)?.[0] || "",
-    twitterCard: githubData.match(regexes.twitterCard)?.[0] || "summary_large_image",
+    twitterCard:
+      githubData.match(regexes.twitterCard)?.[0] || "summary_large_image",
   };
 
   pageData.meta = Boolean(pageData.description + pageData.image); // if there's a description or image, we'll render the meta tags
+
+  // if the user has already been rickrolled by the page, we redirect to the actual repo
+  const redirectUrl = rickrolled
+    ? actualUrl
+    : "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
 
   return {
     props: {
       pageData,
       githubPath,
-      actualUrl,
-      rickrolled,
+      redirectUrl,
     },
   };
 }
 
-export default function Home({ pageData, githubPath, actualUrl, rickrolled }) {
+export default function Home({ pageData, githubPath, redirectUrl }) {
   if (typeof window !== "undefined") {
-    // if the user has already been rickrolled by the page, we redirect to the actual repo
-    location.assign(
-      rickrolled ? actualUrl : "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-    );
+    location.assign(redirectUrl);
   }
 
   return (
@@ -129,20 +137,20 @@ export default function Home({ pageData, githubPath, actualUrl, rickrolled }) {
           </>
         )}
       </Head>
-      <p style={{margin: "1em", fontSize: "18px"}}>
-        Redirecting to the repository... if you aren't being redirected automatically, click{" "}
-        <a style={{fontWeight: 500, textDecoration: "underline"}}
-          href={
-            rickrolled
-              ? actualUrl
-              : "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-          }
+      <p style={{ margin: "1em", fontSize: "18px" }}>
+        Redirecting to the repository... if you aren't being redirected
+        automatically, click{" "}
+        <a
+          style={{ fontWeight: 500, textDecoration: "underline" }}
+          href={redirectUrl}
         >
           here
         </a>
         .
       </p>
-      <a rel="me" style={{display: "none"}} href="https://mas.to/@ashgray">Mastodon</a>
+      <a rel="me" style={{ display: "none" }} href="https://mas.to/@ashgray">
+        Mastodon
+      </a>
     </div>
   );
 }
