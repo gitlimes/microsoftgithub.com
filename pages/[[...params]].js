@@ -78,9 +78,9 @@ export async function getServerSideProps({ req, res, query }) {
 export default function Home({ pageData, githubPath, actualUrl, rickrolled }) {
   if (typeof window !== "undefined") {
     // if the user has already been rickrolled by the page, we redirect to the actual repo
-    /*location.assign(
+    location.assign(
       rickrolled ? actualUrl : "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-    );*/
+    );
   }
 
   return (
