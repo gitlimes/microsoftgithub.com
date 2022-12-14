@@ -120,7 +120,7 @@ export default function Home({ rickrolled }) {
             Source code
           </a>
         </p>
-        <a rel="me" style={{ display: "none" }} href="https://mas.to/@ashgray">
+        <a rel="me" style={{ display: "none" }} href="https://tech.lgbt/@ashg">
           Mastodon
         </a>
       </footer>

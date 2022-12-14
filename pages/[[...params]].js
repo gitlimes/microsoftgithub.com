@@ -148,7 +148,7 @@ export default function Home({ pageData, githubPath, redirectUrl }) {
         </a>
         .
       </p>
-      <a rel="me" style={{ display: "none" }} href="https://mas.to/@ashgray">
+      <a rel="me" style={{ display: "none" }} href="https://tech.lgbt/@ashg">
         Mastodon
       </a>
     </div>
