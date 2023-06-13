@@ -5,6 +5,7 @@ import { detectRobot } from "../lib/detectRobot";
 export async function getServerSideProps({ req, res, query }) {
   const isGist = req.headers.host.includes("gist");
 
+  try {
   if (detectRobot(req.headers["user-agent"])) {
     // increment the redirect count for crawlers
     await SupabaseAdmin.rpc("increment_page_view", {
@@ -15,6 +16,9 @@ export async function getServerSideProps({ req, res, query }) {
     await SupabaseAdmin.rpc("increment_page_view", {
       page_slug: "rickrolled-user",
     });
+  }
+  } catch (e) {
+    console.log("looks like supabase died.", e)
   }
 
   const githubPath = query.params?.join("/") || "";
