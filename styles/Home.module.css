@@ -4,9 +4,9 @@
   max-width: 950px;
   margin: auto;
   color: var(--secondary);
-
   flex-flow: column nowrap;
   display: flex;
+  line-height: 1.6rem;
 }
 
 .wrapper::before {
@@ -22,6 +22,7 @@
 
 .content {
   margin: auto;
+  padding: 2rem 1rem;
 }
 
 .hero {
@@ -35,8 +36,14 @@
 
 .hero p {
   font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.wrapper h1 {
+  margin: 3rem 0 1.5rem;
 }
 
 .wrapper footer p {
   text-align: center;
+  padding: 0 1rem;
 }

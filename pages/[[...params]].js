@@ -6,19 +6,19 @@ export async function getServerSideProps({ req, res, query }) {
   const isGist = req.headers.host.includes("gist");
 
   try {
-  if (detectRobot(req.headers["user-agent"])) {
-    // increment the redirect count for crawlers
-    await SupabaseAdmin.rpc("increment_page_view", {
-      page_slug: "rickrolled-crawler",
-    });
-  } else {
-    // increment the redirect count for users
-    await SupabaseAdmin.rpc("increment_page_view", {
-      page_slug: "rickrolled-user",
-    });
-  }
+    if (detectRobot(req.headers["user-agent"])) {
+      // increment the redirect count for crawlers
+      await SupabaseAdmin.rpc("increment_page_view", {
+        page_slug: "rickrolled-crawler",
+      });
+    } else {
+      // increment the redirect count for users
+      await SupabaseAdmin.rpc("increment_page_view", {
+        page_slug: "rickrolled-user",
+      });
+    }
   } catch (e) {
-    console.log("looks like supabase died.", e)
+    console.log("looks like supabase died.", e);
   }
 
   const githubPath = query.params?.join("/") || "";
@@ -152,9 +152,12 @@ export default function Home({ pageData, githubPath, redirectUrl }) {
         </a>
         .
       </p>
-      <a rel="me" style={{ display: "none" }} href="https://fedi.limes.pink/@limes">
-        Mastodon
-      </a>
+      <a
+        rel="me"
+        style={{ display: "none" }}
+        aria-hidden="true"
+        href="https://fedi.limes.pink/@limes"
+      ></a>
     </div>
   );
 }
