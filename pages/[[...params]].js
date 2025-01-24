@@ -46,7 +46,7 @@ export async function getServerSideProps({ req, res, query }) {
       "g"
     ),
     image: new RegExp(
-      '(?<=<meta (name)?(property)?="twitter:image:src" content=").+?(?=" */*>)',
+      '(?<=<meta (name)?(property)?="twitter:image(:src)?" content=").+?(?=" *\/*>)',
       "g"
     ),
     twitterCard: new RegExp(
