@@ -102,7 +102,7 @@ export default function Home({ rickrolled }) {
           </svg>{" "}
           by{" "}
           <a href="https://limes.pink" target="_blank" rel="noreferrer">
-            ash from limes.pink
+            limes.pink
           </a>{" "}
           • Not affiliated with Microsoft or any of its subsidiaries •{" "}
           <a
