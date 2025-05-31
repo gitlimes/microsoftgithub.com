@@ -65,6 +65,11 @@ export async function getServerSideProps({ req, res, query }) {
       actualPageDom.querySelector("meta[property='og:image']")?.getAttribute("content") ||
       actualPageDom.querySelector("meta[name='og:image']")?.getAttribute("content") || "",
 
+    imageAlt: actualPageDom.querySelector("meta[property='twitter:image:alt']")?.getAttribute("content") ||
+      actualPageDom.querySelector("meta[name='twitter:image:alt']")?.getAttribute("content") ||
+      actualPageDom.querySelector("meta[property='og:image:alt']")?.getAttribute("content") ||
+      actualPageDom.querySelector("meta[name='og:image:alt']")?.getAttribute("content") || "",
+
     twitterCard:
       actualPageDom.querySelector("meta[property='twitter:card']")?.getAttribute("content") ||
       actualPageDom.querySelector("meta[name='twitter:card']")?.getAttribute("content") || "",
@@ -114,7 +119,7 @@ export default function Home({ pageData, path, redirectUrl }) {
         <meta property="og:title" content={pageData.title} />
         <meta property="og:description" content={pageData.description} />
         <meta property="og:image" content={pageData.image} />
-        <meta property="og:image:alt" content={pageData.description} />
+        <meta property="og:image:alt" content={pageData.imageAlt} />
         <meta
           property="og:url"
           content={`https://microsoftgithub.com/${path}`}
