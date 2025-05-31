@@ -144,13 +144,13 @@ export default function Home({ pageData, path, redirectUrl }) {
         </a>
         .
       </p>
+      **/}
       <a
         rel="me"
         style={{ display: "none" }}
         aria-hidden="true"
         href="https://fedi.limes.pink/@limes"
       ></a>
-      **/}
     </div>
   );
 }
