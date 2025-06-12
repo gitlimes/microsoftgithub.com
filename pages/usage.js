@@ -6,6 +6,10 @@ import { useState } from "react";
 export async function getServerSideProps() {
   async function getStats() {
     const statsFetch = await fetch("https://microsoftgithub.com/api/stats");
+
+    if (!statsFetch.ok) {
+      return { rickrolled: null }
+    }
     const statsJson = await statsFetch.json();
     return statsJson;
   }
@@ -75,17 +79,18 @@ export default function Home({ rickrolled }) {
             the domain in my hands, it would have been a waste not to use it to
             rickroll unsuspecting people.
           </p>
-          <p>
-            To date,{" "}
-            <code
-              className="bg clickable"
-              onClick={() => setExtendedStats(!extendedStats)}
-            >
-              {extendedStats ? rickrolled.users : `${rickrolled.kusers}k`}
-            </code>{" "}
-            visitors (excluding bots and crawlers) have been rickrolled, and the
-            number keeps growing!
-          </p>
+          {rickrolled ?
+            <p>
+              To date,{" "}
+              <code
+                className="bg clickable"
+                onClick={() => setExtendedStats(!extendedStats)}
+              >
+                {extendedStats ? rickrolled.users : `${rickrolled.kusers}k`}
+              </code>{" "}
+              visitors (excluding bots and crawlers) have been rickrolled, and the
+              number keeps growing!
+            </p> : <p>P.S.: If you're looking for the statistics, they are currently unavailable. Please check back later!</p>}
         </div>
       </div>
 
