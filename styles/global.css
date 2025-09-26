@@ -25,9 +25,10 @@ body {
 a {
   text-decoration: none;
   color: inherit;
+  text-decoration: underline;
 }
 a:hover {
-  text-decoration: underline;
+  text-decoration: underline 2px;
 }
 
 code {
@@ -45,6 +46,6 @@ code.bg {
 }
 
 ::selection {
-  background: var(--secondary);
-  color: var(--background);
+  background: #fff;
+  color: #242424;
 }
