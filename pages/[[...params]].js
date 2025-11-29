@@ -86,8 +86,10 @@ export async function getServerSideProps({ req, res, query }) {
 
   console.log(pageData)
 
-  // if the user has already been rickrolled by the page, we redirect to the actual repo
-  const redirectUrl = rickrolled
+  /* if the user has already been rickrolled by the page, we redirect to the actual repo.
+   * we can bypass this by setting process.env.NEXT_PUBLIC_ALWAYS_RICKROLL 
+  */
+  const redirectUrl = (rickrolled && !process.env.NEXT_PUBLIC_ALWAYS_RICKROLL)
     ? actualUrl
     : "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
 
