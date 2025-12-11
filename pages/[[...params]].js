@@ -78,7 +78,7 @@ export async function getServerSideProps({ req, res, query }) {
       actualPageDom.querySelector("meta[name='twitter:site']")?.getAttribute("content") || "",
 
     ogSiteName: actualPageDom.querySelector("meta[property='og:site_name']")?.getAttribute("content") ||
-    actualPageDom.querySelector("meta[property='og:site_name']")?.getAttribute("content") || "",
+      actualPageDom.querySelector("meta[property='og:site_name']")?.getAttribute("content") || "",
 
     favicon: actualPageDom.querySelector("link[rel='icon']")?.getAttribute("href") ||
       actualPageDom.querySelector("link[rel='shortcut icon']")?.getAttribute("href") || ""
@@ -134,7 +134,7 @@ export default function Home({ pageData, path, redirectUrl }) {
           href={pageData.favicon}
         />
       </Head>
-      
+
       {/**
       <p style={{ margin: "1em", fontSize: "18px" }}>
         We're taking you to your requested page. If you're not redirected automatically, just click {" "}
