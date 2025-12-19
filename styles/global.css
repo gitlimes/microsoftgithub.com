@@ -29,9 +29,6 @@ a:hover {
   text-decoration: underline 2px;
 }
 
-code {
-  line-break: anywhere;
-}
 code.bg {
   line-break: auto;
   background: #484848;

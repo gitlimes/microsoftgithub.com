@@ -65,8 +65,8 @@ export default function Home({ rickrolled }) {
           </p>
           <p>
             For example,{" "}
-            <code className="bg">https://github.com/github/dmca</code> becomes{" "}
-            <code className="bg">https://microsoftgithub.com/github/dmca</code>.
+            <code className="bg">https://github.com/&#8203;github/&#8203;dmca</code> becomes{" "}
+            <code className="bg">https://<u>microsoft</u>github.com/&#8203;github/&#8203;dmca</code>.
           </p>
         </div>
 
